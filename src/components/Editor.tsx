@@ -14,16 +14,16 @@ import { initialValue } from "../utils/initialValue";
 import { BlockType, BulletedListElement, CustomElement, slateShortcuts } from "../utils/slate-types";
 
 const SHORTCUTS: slateShortcuts = {
-  "*": "list-item",
-  "-": "list-item",
-  "+": "list-item",
-  ">": "block-quote",
-  "#": "heading-one",
-  "##": "heading-two",
-  "###": "heading-three",
-  "####": "heading-four",
-  "#####": "heading-five",
-  "######": "heading-six",
+  "*": BlockType.ListItem,
+  "-": BlockType.ListItem,
+  "+": BlockType.ListItem,
+  ">": BlockType.BlockQuote,
+  "#": BlockType.H1,
+  "##": BlockType.H2,
+  "###": BlockType.H3,
+  "####": BlockType.H4,
+  "#####": BlockType.H5,
+  "######": BlockType.H6,
 };
 
 export const MdEditor = () => {
@@ -64,11 +64,10 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
         if (!Range.isCollapsed(range)) {
           Transforms.delete(editor); //Deletando a linha
         }
-
         const newProperties: Partial<CustomElement> = {
           type,
         };
-        Transforms.setNodes<SlateElement>(editor, newProperties, {
+        Transforms.setNodes<CustomElement>(editor, newProperties, {
           match: (n) => Editor.isBlock(editor, n),
         });
 
@@ -110,8 +109,8 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
           block.type !== "paragraph" &&
           Point.equals(selection.anchor, start)
         ) {
-          const newProperties: Partial<SlateElement> = {
-            type: "paragraph",
+          const newProperties: Partial<CustomElement> = {
+            type: BlockType.Paragraph,
           };
           Transforms.setNodes(editor, newProperties);
 
@@ -128,7 +127,7 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
           return;
         }
       }
-
+      //@ts-ignore
       deleteBackward(...args);
     }
   };
