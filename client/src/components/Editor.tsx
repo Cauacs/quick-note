@@ -11,20 +11,8 @@ import {
 import { Editable, ReactEditor, Slate, withReact } from "slate-react";
 import { json } from "stream/consumers";
 import { initialValue } from "../utils/initialValue";
-import { BlockType, BulletedListElement, CustomElement, slateShortcuts } from "../utils/slate-types";
+import { BlockType, BulletedListElement, CustomElement, SHORTCUTS, slateShortcuts } from "../utils/slate-types";
 
-const SHORTCUTS: slateShortcuts = {
-  "*": BlockType.ListItem,
-  "-": BlockType.ListItem,
-  "+": BlockType.ListItem,
-  ">": BlockType.BlockQuote,
-  "#": BlockType.H1,
-  "##": BlockType.H2,
-  "###": BlockType.H3,
-  "####": BlockType.H4,
-  "#####": BlockType.H5,
-  "######": BlockType.H6,
-};
 
 export const MdEditor = () => {
   const [editor] = useState(withShortcuts(withReact(createEditor())));

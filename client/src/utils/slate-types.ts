@@ -68,4 +68,17 @@ export interface slateShortcuts {
   [index : string] : BlockType;
 }
 
+export const SHORTCUTS: slateShortcuts = {
+  "*": BlockType.ListItem,
+  "-": BlockType.ListItem,
+  "+": BlockType.ListItem,
+  ">": BlockType.BlockQuote,
+  "#": BlockType.H1,
+  "##": BlockType.H2,
+  "###": BlockType.H3,
+  "####": BlockType.H4,
+  "#####": BlockType.H5,
+  "######": BlockType.H6,
+};
+
 //todo : redo all
