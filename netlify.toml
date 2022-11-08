@@ -1,8 +1,9 @@
 # example netlify.toml
 [build]
   command = "# no build command"
-  functions = "server/netlify/functions"
+  functions = "netlify/functions"
   publish = "."
+  base = "server/"
 
 [functions]
   node_bundler = "esbuild"
