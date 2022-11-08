@@ -115,6 +115,7 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
           return;
         }
       }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       deleteBackward(...args);
     }
