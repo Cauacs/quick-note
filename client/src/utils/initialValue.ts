@@ -1,8 +1,9 @@
 import { Descendant } from "slate";
+import { BlockType } from './slate-types'
 
 export const initialValue : Descendant[] = [
     {
-        type: 'paragraph',
+        type: BlockType.Paragraph,
         children: [
           {
             text:
@@ -11,7 +12,7 @@ export const initialValue : Descendant[] = [
         ],
     },
     {
-      type: 'paragraph',
+      type: BlockType.Paragraph,
       children : [
         {
           text: 'This is another paragraph'

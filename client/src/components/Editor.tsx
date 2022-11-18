@@ -11,7 +11,7 @@ import {
 import { Editable, ReactEditor, Slate, withReact } from "slate-react";
 import { json } from "stream/consumers";
 import { initialValue } from "../utils/initialValue";
-import { BlockType, BulletedListElement, CustomElement, SHORTCUTS, slateShortcuts } from "../utils/slate-types";
+import { BlockType, BulletedListElement, CustomElement, SHORTCUTS } from "../utils/slate-types";
 
 
 export const MdEditor = () => {
