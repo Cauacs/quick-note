@@ -5,8 +5,23 @@
 
 
 import type { Context } from "./../types/Context"
-
-
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+     */
+    json<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "JSON";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+     */
+    json<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "JSON";
+  }
+}
 
 
 declare global {
@@ -25,9 +40,14 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  JSON: any
 }
 
 export interface NexusGenObjects {
+  Document: { // root type
+    id?: string | null; // ID
+    value?: NexusGenScalars['JSON'] | null; // JSON
+  }
   Query: {};
 }
 
@@ -42,13 +62,23 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Document: { // field return type
+    id: string | null; // ID
+    value: NexusGenScalars['JSON'] | null; // JSON
+  }
   Query: { // field return type
+    documents: Array<NexusGenRootTypes['Document'] | null>; // [Document]!
     test: boolean | null; // Boolean
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Document: { // field return type name
+    id: 'ID'
+    value: 'JSON'
+  }
   Query: { // field return type name
+    documents: 'Document'
     test: 'Boolean'
   }
 }

@@ -1,9 +1,10 @@
 import { makeSchema } from "nexus";
 import { join } from "path";
 import * as types from "./types";
+import { JSON } from "./json";
 
 const schema = makeSchema({
-  types,
+  types: [JSON, types],
   contextType: {
     module: join(process.cwd(), "./types/Context.ts"),
     export: "Context",
