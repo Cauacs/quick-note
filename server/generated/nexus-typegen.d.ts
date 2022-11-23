@@ -67,6 +67,7 @@ export interface NexusGenFieldTypes {
     value: NexusGenScalars['JSON'] | null; // JSON
   }
   Query: { // field return type
+    document: NexusGenRootTypes['Document'] | null; // Document
     documents: Array<NexusGenRootTypes['Document'] | null>; // [Document]!
     test: boolean | null; // Boolean
   }
@@ -78,6 +79,7 @@ export interface NexusGenFieldTypeNames {
     value: 'JSON'
   }
   Query: { // field return type name
+    document: 'Document'
     documents: 'Document'
     test: 'Boolean'
   }
@@ -85,6 +87,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Query: {
+    document: { // args
+      id: string; // ID!
+    }
     test: { // args
       bool: boolean; // Boolean!
     }
