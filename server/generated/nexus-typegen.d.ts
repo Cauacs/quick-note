@@ -4,7 +4,7 @@
  */
 
 
-import type { Context } from "./../types/Context"
+import type { Context } from "./../src/types/Context"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -48,6 +48,7 @@ export interface NexusGenObjects {
     id?: string | null; // ID
     value?: NexusGenScalars['JSON'] | null; // JSON
   }
+  Mutation: {};
   Query: {};
 }
 
@@ -66,10 +67,13 @@ export interface NexusGenFieldTypes {
     id: string | null; // ID
     value: NexusGenScalars['JSON'] | null; // JSON
   }
+  Mutation: { // field return type
+    createDocument: NexusGenRootTypes['Document'] | null; // Document
+    updateDocument: NexusGenRootTypes['Document'] | null; // Document
+  }
   Query: { // field return type
     document: NexusGenRootTypes['Document'] | null; // Document
     documents: Array<NexusGenRootTypes['Document'] | null>; // [Document]!
-    test: boolean | null; // Boolean
   }
 }
 
@@ -78,20 +82,29 @@ export interface NexusGenFieldTypeNames {
     id: 'ID'
     value: 'JSON'
   }
+  Mutation: { // field return type name
+    createDocument: 'Document'
+    updateDocument: 'Document'
+  }
   Query: { // field return type name
     document: 'Document'
     documents: 'Document'
-    test: 'Boolean'
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createDocument: { // args
+      value: NexusGenScalars['JSON']; // JSON!
+    }
+    updateDocument: { // args
+      id: string; // ID!
+      value: NexusGenScalars['JSON']; // JSON!
+    }
+  }
   Query: {
     document: { // args
       id: string; // ID!
-    }
-    test: { // args
-      bool: boolean; // Boolean!
     }
   }
 }

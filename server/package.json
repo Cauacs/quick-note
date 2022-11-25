@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev" : "ts-node ./lib/apolloserver.ts"
+    "dev" : "ts-node ./src/lib/apolloserver.ts"
   },
   "keywords": [],
   "author": "",

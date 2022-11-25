@@ -1,7 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { prisma } from "./prisma";
-import { schema } from "../modules/graphql/schema";
+import { schema } from "../graphql/schema";
 import { PrismaClient } from "@prisma/client";
 import { Context } from "../types/Context";
 
