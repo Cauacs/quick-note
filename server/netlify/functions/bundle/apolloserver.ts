@@ -1,10 +1,10 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { prisma } from "./prisma";
-import { schema } from "../graphql/schema";
+import { schema } from "./schema";
 import { startServerAndCreateLambdaHandler } from "@as-integrations/aws-lambda";
 
-const server = new ApolloServer({
+export const server = new ApolloServer({
   schema,
 });
 
@@ -17,5 +17,3 @@ const app = async () => {
 };
 
 app();
-
-export const lambdaServer = startServerAndCreateLambdaHandler(server);

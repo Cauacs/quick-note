@@ -149,6 +149,13 @@
   resolved "https://registry.yarnpkg.com/@apollo/utils.withrequired/-/utils.withrequired-1.0.1.tgz#7718b2edc87e35c65411cd4069694a33b8db9508"
   integrity sha512-5DYufeISXjz9UqtISIwte86F8ELjTrKVeXcPtdnUnV/PX+4EXUjqIp1FLJTYrCQ1a9OyFAMeCZ2QhUy1D8w7/A==
 
+"@as-integrations/aws-lambda@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@as-integrations/aws-lambda/-/aws-lambda-1.0.1.tgz#856801bde3223f9147cffe65524f35267f10c2f5"
+  integrity sha512-TNz/4RpDdnXDMAhHIyZyQhKAbxIntBQGunS50DIgcQnE0Om5u425HbgblrWJPaPODCISOA5/XOqEyeoFdfZ0bQ==
+  dependencies:
+    "@types/aws-lambda" "^8.10.106"
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"
@@ -293,6 +300,11 @@
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.3.tgz#472eaab5f15c1ffdd7f8628bd4c4f753995ec79e"
   integrity sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==
+
+"@types/aws-lambda@^8.10.106":
+  version "8.10.109"
+  resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.109.tgz#2f434cbfafe083529e365fe9c114787827a169a8"
+  integrity sha512-/ME92FneNyXQzrAfcnQQlW1XkCZGPDlpi2ao1MJwecN+6SbeonKeggU8eybv1DfKli90FAVT1MlIZVXfwVuCyg==
 
 "@types/body-parser@*":
   version "1.19.2"
