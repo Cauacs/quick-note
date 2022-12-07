@@ -1,4 +1,11 @@
-import { server } from "../bundle/apolloserver";
 import { startServerAndCreateLambdaHandler } from "@as-integrations/aws-lambda";
+import { server } from "../bundle/src/lib/apolloserver";
+import { prisma } from "../bundle/src/lib/prisma";
 
-const lambdaServer = startServerAndCreateLambdaHandler(server);
+exports.handler = startServerAndCreateLambdaHandler(server, {
+  context: async ({ event, context }) => ({
+    lambdaEvent: event,
+    lambdaContext: context,
+    prisma,
+  }),
+});
