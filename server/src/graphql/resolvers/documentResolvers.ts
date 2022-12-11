@@ -11,8 +11,8 @@ export const getAllDocumentsResolver: FieldResolver<
 export const getDocumentByIdResolver: FieldResolver<
   "Query",
   "getDocumentById"
-> = async (_, { id }, { prisma }: { prisma: PrismaClient }) => {
-  return await prisma.document.findUnique({ where: { id: Number(id) } });
+> = async (_, { id }: { id: string }, { prisma }: { prisma: PrismaClient }) => {
+  return await prisma.document.findUnique({ where: { id } });
 };
 
 export const createDocumentResolver: FieldResolver<
@@ -27,7 +27,7 @@ export const updateDocumentByIdResolver: FieldResolver<
   "updateDocumentById"
 > = async (_, { id, value }, { prisma }: { prisma: PrismaClient }) => {
   return await prisma.document.update({
-    where: { id: Number(id) },
+    where: { id: id },
     data: { value: value },
   });
 };
@@ -36,5 +36,5 @@ export const deleteDocumentByIdResolver: FieldResolver<
   "Mutation",
   "deleteDocumentById"
 > = async (_, { id }, { prisma }: { prisma: PrismaClient }) => {
-  return await prisma.document.delete({ where: { id: Number(id) } });
+  return await prisma.document.delete({ where: { id: id } });
 };
