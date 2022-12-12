@@ -3,7 +3,6 @@ import {
   booleanArg,
   core,
   extendType,
-  idArg,
   nonNull,
   objectType,
   stringArg,
@@ -51,7 +50,10 @@ export const updateDocumentById = extendType({
   definition(t) {
     t.field("updateDocument", {
       type: "Document",
-      args: { id: nonNull(idArg()), value: nonNull(jsonArg({ type: "JSON" })) },
+      args: {
+        id: nonNull(stringArg()),
+        value: nonNull(jsonArg({ type: "JSON" })),
+      },
       resolve: updateDocumentByIdResolver,
     });
   },
@@ -62,7 +64,7 @@ export const deleteDocumentById = extendType({
   definition(t) {
     t.field("deleteDocument", {
       type: "Document",
-      args: { id: nonNull(idArg()) },
+      args: { id: nonNull(stringArg()) },
       resolve: deleteDocumentByIdResolver,
     });
   },

@@ -14,8 +14,8 @@ scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/fi
 
 type Mutation {
   createDocument(value: JSON!): Document
-  deleteDocument(id: ID!): Document
-  updateDocument(id: ID!, value: JSON!): Document
+  deleteDocument(id: String!): Document
+  updateDocument(id: String!, value: JSON!): Document
 }
 
 type Query {

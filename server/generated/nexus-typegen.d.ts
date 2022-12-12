@@ -100,10 +100,10 @@ export interface NexusGenArgTypes {
       value: NexusGenScalars['JSON']; // JSON!
     }
     deleteDocument: { // args
-      id: string; // ID!
+      id: string; // String!
     }
     updateDocument: { // args
-      id: string; // ID!
+      id: string; // String!
       value: NexusGenScalars['JSON']; // JSON!
     }
   }
