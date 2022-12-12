@@ -3,7 +3,7 @@
 
 
 type Document {
-  id: ID
+  id: ID!
   value: JSON
 }
 
@@ -19,6 +19,6 @@ type Mutation {
 }
 
 type Query {
-  document(id: ID!): Document
+  document(id: String!): Document
   documents: [Document]!
 }

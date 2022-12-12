@@ -6,6 +6,7 @@ import {
   idArg,
   nonNull,
   objectType,
+  stringArg,
 } from "nexus";
 import {
   createDocumentResolver,
@@ -21,7 +22,7 @@ const jsonArg = (opts: core.NexusArgConfig<"JSON">) =>
 export const document = objectType({
   name: "Document",
   definition: (t) => {
-    t.id("id");
+    t.nonNull.id("id");
     t.field("value", { type: "JSON" });
   },
 });
@@ -40,7 +41,7 @@ export const getDocumentById = extendType({
   definition(t) {
     t.field("document", {
       type: "Document",
-      args: { id: nonNull(idArg()) },
+      args: { id: nonNull(stringArg()) },
       resolve: getDocumentByIdResolver,
     });
   },

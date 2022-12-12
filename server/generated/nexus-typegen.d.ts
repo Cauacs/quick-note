@@ -45,7 +45,7 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Document: { // root type
-    id?: string | null; // ID
+    id: string; // ID!
     value?: NexusGenScalars['JSON'] | null; // JSON
   }
   Mutation: {};
@@ -64,7 +64,7 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Document: { // field return type
-    id: string | null; // ID
+    id: string; // ID!
     value: NexusGenScalars['JSON'] | null; // JSON
   }
   Mutation: { // field return type
@@ -109,7 +109,7 @@ export interface NexusGenArgTypes {
   }
   Query: {
     document: { // args
-      id: string; // ID!
+      id: string; // String!
     }
   }
 }
