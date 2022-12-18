@@ -9,10 +9,13 @@ import {
   createEditor,
 } from "slate";
 import { Editable, ReactEditor, Slate, withReact } from "slate-react";
-import { json } from "stream/consumers";
 import { initialValue } from "../utils/initialValue";
-import { BlockType, BulletedListElement, CustomElement, SHORTCUTS } from "../utils/slate-types";
-
+import {
+  BlockType,
+  BulletedListElement,
+  CustomElement,
+  SHORTCUTS,
+} from "../utils/slate-types";
 
 export const MdEditor = () => {
   const [editor] = useState(withShortcuts(withReact(createEditor())));
@@ -22,11 +25,8 @@ export const MdEditor = () => {
   return (
     <div>
       <Slate editor={editor} value={value} onChange={setValue}>
-        <Editable 
-        renderElement={renderElement} 
-        />
+        <Editable renderElement={renderElement} />
       </Slate>
-      <pre>{JSON.stringify(value, null, 2)}</pre>
     </div>
   );
 };
@@ -38,7 +38,8 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
     const { selection } = editor;
     if (text.endsWith(" ") && selection && Range.isCollapsed(selection)) {
       const { anchor } = selection; //anchor da selection, que nesse caso, é a mesma posição do cursor
-      const block = Editor.above(editor, { //acha o ancestral do leaf atual
+      const block = Editor.above(editor, {
+        //acha o ancestral do leaf atual
         match: (n) => Editor.isBlock(editor, n),
       });
       const path = block ? block[1] : []; // Path do block
@@ -124,7 +125,15 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
   return editor;
 };
 
-const Element = ({ attributes, children, element }: {attributes : any; children : any; element : any}) => {
+const Element = ({
+  attributes,
+  children,
+  element,
+}: {
+  attributes: any;
+  children: any;
+  element: any;
+}) => {
   switch (element.type) {
     case "block-quote":
       return <blockquote {...attributes}>{children}</blockquote>;
