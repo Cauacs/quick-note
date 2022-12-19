@@ -15,6 +15,8 @@ import {
   BulletedListElement,
   CustomElement,
   SHORTCUTS,
+  HeadersTypes,
+  ParagraphElement,
 } from "../utils/slate-types";
 
 export const MdEditor = () => {
@@ -32,7 +34,7 @@ export const MdEditor = () => {
 };
 
 const withShortcuts = (editor: BaseEditor & ReactEditor) => {
-  const { deleteBackward, insertText } = editor;
+  const { deleteBackward, insertText, insertBreak } = editor;
 
   editor.insertText = (text) => {
     const { selection } = editor;
@@ -119,6 +121,29 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       deleteBackward(...args);
+    }
+  };
+
+  editor.insertBreak = () => {
+    const { selection } = editor;
+    insertBreak();
+    if (selection && Range.isCollapsed(selection)) {
+      const previousBlock = Editor.above(editor, {
+        match: (n) => Editor.isBlock(editor, n),
+      });
+      if (previousBlock) {
+        const block = previousBlock[0] as CustomElement;
+        if (block.type in HeadersTypes) {
+          const emptyParagraph: ParagraphElement = {
+            type: BlockType.Paragraph,
+            children: [{ text: "" }],
+          };
+          Transforms.setNodes(editor, emptyParagraph);
+          // Transforms.setNodes(editor, emptyParagraph, {
+          //   at: editor.selection,
+          // })
+        }
+      }
     }
   };
 
