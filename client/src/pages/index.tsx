@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
+import { CreateButton } from "../components/Button";
 import { MdEditor } from "../components/Editor";
 
 // TODO:
-//       add insertBreak thing
-//       add button to save
-//       add todo list
+//       maybe change the font.
+//       integrate with backend.
 //       add the type something
 
 const Home: NextPage = () => {
@@ -17,6 +17,9 @@ const Home: NextPage = () => {
           {/* container */}
           <div className="w-full max-w-[900px] p-4 pt-10">
             <MdEditor />
+            <div className="text-right">
+              <CreateButton />
+            </div>
           </div>
         </div>
       </div>
