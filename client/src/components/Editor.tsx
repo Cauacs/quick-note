@@ -8,7 +8,14 @@ import {
   Element as SlateElement,
   createEditor,
 } from "slate";
-import { Editable, ReactEditor, Slate, withReact } from "slate-react";
+import {
+  DefaultLeaf,
+  Editable,
+  ReactEditor,
+  RenderLeafProps,
+  Slate,
+  withReact,
+} from "slate-react";
 import { initialValue } from "../utils/initialValue";
 import {
   BlockType,
@@ -20,14 +27,37 @@ import {
 } from "../utils/slate-types";
 
 export const MdEditor = () => {
-  const [editor] = useState(withShortcuts(withReact(createEditor())));
+  //const [editor] = useState(withShortcuts(withReact(createEditor())));
+  const editor = useMemo(() => withShortcuts(withReact(createEditor())), []);
   const [value, setValue] = useState(initialValue);
   const renderElement = useCallback((props: any) => <Element {...props} />, []);
+  const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
 
   return (
     <div>
       <Slate editor={editor} value={value} onChange={setValue}>
-        <Editable renderElement={renderElement} />
+        <Editable
+          renderElement={renderElement}
+          decorate={([node, path]) => {
+            if (editor.selection != null && path[0] != null) {
+              if (
+                !Editor.isEditor(node) &&
+                Editor.string(editor, [path[0]]) === "" &&
+                Range.includes(editor.selection, path) &&
+                Range.isCollapsed(editor.selection)
+              ) {
+                return [
+                  {
+                    ...editor.selection,
+                    placeholder: "Type something here...",
+                  },
+                ];
+              }
+            }
+            return [];
+          }}
+          renderLeaf={renderLeaf}
+        />
       </Slate>
     </div>
   );
@@ -139,9 +169,6 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
             children: [{ text: "" }],
           };
           Transforms.setNodes(editor, emptyParagraph);
-          // Transforms.setNodes(editor, emptyParagraph, {
-          //   at: editor.selection,
-          // })
         }
       }
     }
@@ -181,4 +208,23 @@ const Element = ({
     default:
       return <p {...attributes}>{children}</p>;
   }
+};
+
+// https://jkrsp.com/slate-js-placeholder-per-line/
+
+const Leaf = ({ leaf, children, attributes }: RenderLeafProps) => {
+  if (leaf.placeholder) {
+    return (
+      <>
+        <span
+          className="pointer-events-none absolute select-none opacity-30"
+          contentEditable={false}
+        >
+          {leaf.placeholder}
+        </span>
+        <span {...attributes}>{children}</span>
+      </>
+    );
+  }
+  return <span {...attributes}>{children}</span>;
 };

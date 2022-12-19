@@ -23,6 +23,7 @@ export enum HeadersTypes {
 }
 //text leaf
 export type CustomText = {
+  placeholder?: string;
   text: string; //obligatory
   bold?: boolean;
   italic?: boolean;
