@@ -1,13 +1,23 @@
+import { gql, useQuery } from "@apollo/client";
 import type { NextPage } from "next";
 import { CreateButton } from "../components/Button";
 import { MdEditor } from "../components/Editor";
 
 // TODO:
-//       maybe change the font.
 //       integrate with backend.
-//       add the type something
+//       Add the router
+//       maybe change the font.
 
 const Home: NextPage = () => {
+  const data = useQuery(gql`
+    query Documents {
+      documents {
+        id
+        value
+      }
+    }
+  `);
+  console.log(data);
   return (
     <>
       {/* editor */}
@@ -28,30 +38,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-type TechnologyCardProps = {
-  name: string;
-  description: string;
-  documentation: string;
-};
-
-const TechnologyCard = ({
-  name,
-  description,
-  documentation,
-}: TechnologyCardProps) => {
-  return (
-    <section className="border-gray-500 flex flex-col justify-center rounded border-2 p-6 shadow-xl duration-500 motion-safe:hover:scale-105">
-      <h2 className="text-gray-700 text-lg">{name}</h2>
-      <p className="text-gray-600 text-sm">{description}</p>
-      <a
-        className="text-violet-500 m-auto mt-3 w-fit text-sm underline decoration-dotted underline-offset-2"
-        href={documentation}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Documentation
-      </a>
-    </section>
-  );
-};
