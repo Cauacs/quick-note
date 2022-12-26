@@ -5,6 +5,7 @@ import { schema } from "../graphql/schema";
 
 export const server = new ApolloServer({
   schema,
+  csrfPrevention: false,
 });
 
 // const app = async () => {

@@ -27,6 +27,7 @@ async function handler(event, context, callback) {
     headers: {
       ...resp?.headers,
       "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "*",
     },
   };
 }
