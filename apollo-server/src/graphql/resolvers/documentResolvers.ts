@@ -3,28 +3,28 @@ import { FieldResolver } from "nexus";
 
 export const getAllDocumentsResolver: FieldResolver<
   "Query",
-  "getAllDocuments"
+  "documents" | "getAllDocuments"
 > = async (_, __, { prisma }: { prisma: PrismaClient }) => {
   return await prisma.document.findMany();
 };
 
 export const getDocumentByIdResolver: FieldResolver<
   "Query",
-  "getDocumentById"
+  "Document" | "getDocumentById"
 > = async (_, { id }: { id: string }, { prisma }: { prisma: PrismaClient }) => {
   return await prisma.document.findUnique({ where: { id } });
 };
 
 export const createDocumentResolver: FieldResolver<
   "Mutation",
-  "createDocument"
+  "Document" | "createDocument"
 > = async (_, { value }, { prisma }: { prisma: PrismaClient }) => {
   return await prisma.document.create({ data: { value: value } });
 };
 
 export const updateDocumentByIdResolver: FieldResolver<
   "Mutation",
-  "updateDocumentById"
+  "Document" | "updateDocumentById"
 > = async (_, { id, value }, { prisma }: { prisma: PrismaClient }) => {
   return await prisma.document.update({
     where: { id: id },

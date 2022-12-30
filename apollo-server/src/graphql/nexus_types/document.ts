@@ -1,12 +1,4 @@
-import {
-  arg,
-  booleanArg,
-  core,
-  extendType,
-  nonNull,
-  objectType,
-  stringArg,
-} from "nexus";
+import { arg, core, extendType, nonNull, objectType, stringArg } from "nexus";
 import {
   createDocumentResolver,
   deleteDocumentByIdResolver,
@@ -38,7 +30,7 @@ export const getAllDocuments = extendType({
 export const getDocumentById = extendType({
   type: "Query",
   definition(t) {
-    t.field("document", {
+    t.field("Document", {
       type: "Document",
       args: { id: nonNull(stringArg()) },
       resolve: getDocumentByIdResolver,
@@ -48,7 +40,7 @@ export const getDocumentById = extendType({
 export const updateDocumentById = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("updateDocument", {
+    t.field("updateDocumentById", {
       type: "Document",
       args: {
         id: nonNull(stringArg()),
@@ -62,7 +54,7 @@ export const updateDocumentById = extendType({
 export const deleteDocumentById = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("deleteDocument", {
+    t.field("deleteDocumentById", {
       type: "Document",
       args: { id: nonNull(stringArg()) },
       resolve: deleteDocumentByIdResolver,
