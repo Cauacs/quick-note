@@ -1,4 +1,12 @@
-import { arg, core, extendType, nonNull, objectType, stringArg } from "nexus";
+import {
+  arg,
+  core,
+  extendType,
+  inputObjectType,
+  nonNull,
+  objectType,
+  stringArg,
+} from "nexus";
 import {
   createDocumentResolver,
   deleteDocumentByIdResolver,
@@ -10,11 +18,64 @@ import {
 const jsonArg = (opts: core.NexusArgConfig<"JSON">) =>
   arg({ ...opts, type: "JSON" });
 
+export const createDocumentInput = inputObjectType({
+  name: "createDocumentInput",
+  definition(t) {
+    t.nonNull.list.field("value", { type: blockElementInput });
+  },
+});
+
+export const customTextInput = inputObjectType({
+  name: "customTextInput",
+  definition(t) {
+    t.nonNull.string("text");
+    t.string("placeholder");
+    t.boolean("bold");
+    t.boolean("italic");
+    t.boolean("underline");
+    t.boolean("strikethrough");
+  },
+});
+
+export const blockElementInput = inputObjectType({
+  name: "blockElementInput",
+  definition(t) {
+    t.nonNull.string("type");
+    t.nonNull.list.field("children", {
+      type: customTextInput,
+    });
+  },
+});
+
+export const customText = objectType({
+  name: "customText",
+  definition(t) {
+    t.nonNull.string("text");
+    t.string("placeholder");
+    t.boolean("bold");
+    t.boolean("italic");
+    t.boolean("underline");
+    t.boolean("strikethrough");
+  },
+});
+
+export const blockElement = objectType({
+  name: "blockElement",
+  definition(t) {
+    t.nonNull.string("type");
+    t.nonNull.list.field("children", {
+      type: "customText",
+    });
+  },
+});
+
 export const document = objectType({
   name: "Document",
   definition: (t) => {
     t.nonNull.id("id");
-    t.field("value", { type: "JSON" });
+    //t.field("value", { type: "JSON" });
+    t.nonNull.list.field("value", { type: "blockElement" });
+    t.field("createAt", { type: "DateTime" });
   },
 });
 
@@ -44,7 +105,7 @@ export const updateDocumentById = extendType({
       type: "Document",
       args: {
         id: nonNull(stringArg()),
-        value: nonNull(jsonArg({ type: "JSON" })),
+        input: nonNull(createDocumentInput),
       },
       resolve: updateDocumentByIdResolver,
     });
@@ -67,7 +128,7 @@ export const createDocument = extendType({
   definition(t) {
     t.field("createDocument", {
       type: "Document",
-      args: { value: nonNull(jsonArg({ type: "JSON" })) },
+      args: { input: nonNull(createDocumentInput) },
       resolve: createDocumentResolver,
     });
   },

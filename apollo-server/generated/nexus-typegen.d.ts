@@ -12,6 +12,10 @@ declare global {
      * The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
     json<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "JSON";
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    datetime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
   }
 }
 declare global {
@@ -20,6 +24,10 @@ declare global {
      * The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
      */
     json<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "JSON";
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    datetime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
   }
 }
 
@@ -29,6 +37,21 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  blockElementInput: { // input type
+    children: Array<NexusGenInputs['customTextInput'] | null>; // [customTextInput]!
+    type: string; // String!
+  }
+  createDocumentInput: { // input type
+    value: Array<NexusGenInputs['blockElementInput'] | null>; // [blockElementInput]!
+  }
+  customTextInput: { // input type
+    bold?: boolean | null; // Boolean
+    italic?: boolean | null; // Boolean
+    placeholder?: string | null; // String
+    strikethrough?: boolean | null; // Boolean
+    text: string; // String!
+    underline?: boolean | null; // Boolean
+  }
 }
 
 export interface NexusGenEnums {
@@ -40,16 +63,30 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
   JSON: any
 }
 
 export interface NexusGenObjects {
   Document: { // root type
+    createAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id: string; // ID!
-    value?: NexusGenScalars['JSON'] | null; // JSON
+    value: Array<NexusGenRootTypes['blockElement'] | null>; // [blockElement]!
   }
   Mutation: {};
   Query: {};
+  blockElement: { // root type
+    children: Array<NexusGenRootTypes['customText'] | null>; // [customText]!
+    type: string; // String!
+  }
+  customText: { // root type
+    bold?: boolean | null; // Boolean
+    italic?: boolean | null; // Boolean
+    placeholder?: string | null; // String
+    strikethrough?: boolean | null; // Boolean
+    text: string; // String!
+    underline?: boolean | null; // Boolean
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -64,51 +101,77 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Document: { // field return type
+    createAt: NexusGenScalars['DateTime'] | null; // DateTime
     id: string; // ID!
-    value: NexusGenScalars['JSON'] | null; // JSON
+    value: Array<NexusGenRootTypes['blockElement'] | null>; // [blockElement]!
   }
   Mutation: { // field return type
     createDocument: NexusGenRootTypes['Document'] | null; // Document
-    deleteDocument: NexusGenRootTypes['Document'] | null; // Document
-    updateDocument: NexusGenRootTypes['Document'] | null; // Document
+    deleteDocumentById: NexusGenRootTypes['Document'] | null; // Document
+    updateDocumentById: NexusGenRootTypes['Document'] | null; // Document
   }
   Query: { // field return type
-    document: NexusGenRootTypes['Document'] | null; // Document
+    Document: NexusGenRootTypes['Document'] | null; // Document
     documents: Array<NexusGenRootTypes['Document'] | null>; // [Document]!
+  }
+  blockElement: { // field return type
+    children: Array<NexusGenRootTypes['customText'] | null>; // [customText]!
+    type: string; // String!
+  }
+  customText: { // field return type
+    bold: boolean | null; // Boolean
+    italic: boolean | null; // Boolean
+    placeholder: string | null; // String
+    strikethrough: boolean | null; // Boolean
+    text: string; // String!
+    underline: boolean | null; // Boolean
   }
 }
 
 export interface NexusGenFieldTypeNames {
   Document: { // field return type name
+    createAt: 'DateTime'
     id: 'ID'
-    value: 'JSON'
+    value: 'blockElement'
   }
   Mutation: { // field return type name
     createDocument: 'Document'
-    deleteDocument: 'Document'
-    updateDocument: 'Document'
+    deleteDocumentById: 'Document'
+    updateDocumentById: 'Document'
   }
   Query: { // field return type name
-    document: 'Document'
+    Document: 'Document'
     documents: 'Document'
+  }
+  blockElement: { // field return type name
+    children: 'customText'
+    type: 'String'
+  }
+  customText: { // field return type name
+    bold: 'Boolean'
+    italic: 'Boolean'
+    placeholder: 'String'
+    strikethrough: 'Boolean'
+    text: 'String'
+    underline: 'Boolean'
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
     createDocument: { // args
-      value: NexusGenScalars['JSON']; // JSON!
+      input: NexusGenInputs['createDocumentInput']; // createDocumentInput!
     }
-    deleteDocument: { // args
+    deleteDocumentById: { // args
       id: string; // String!
     }
-    updateDocument: { // args
+    updateDocumentById: { // args
       id: string; // String!
       value: NexusGenScalars['JSON']; // JSON!
     }
   }
   Query: {
-    document: { // args
+    Document: { // args
       id: string; // String!
     }
   }
@@ -122,7 +185,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = never;
 

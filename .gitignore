@@ -13,8 +13,8 @@
 /prisma/db.sqlite-journal
 
 # next.js
-client/.next/
-client/out/
+.next/
+out/
 
 # production
 /build
@@ -40,5 +40,4 @@ yarn-error.log*
 *.tsbuildinfo
 
 # Local Netlify folder
-.netlify
 node_modules

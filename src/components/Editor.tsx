@@ -59,6 +59,7 @@ export const MdEditor = () => {
           renderLeaf={renderLeaf}
         />
       </Slate>
+      <pre>{JSON.stringify(value, null, 2)}</pre>
     </div>
   );
 };

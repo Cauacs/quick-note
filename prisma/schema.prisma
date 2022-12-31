@@ -13,8 +13,9 @@ datasource db {
 }
 
 model Document {
-  id    String @id @unique @default(cuid())
-  value Json
+  id       String   @id @unique @default(cuid())
+  value    Json
+  createAt DateTime @default(now())
 }
 
 model User {

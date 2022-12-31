@@ -5,7 +5,11 @@ export const getAllDocumentsResolver: FieldResolver<
   "Query",
   "documents" | "getAllDocuments"
 > = async (_, __, { prisma }: { prisma: PrismaClient }) => {
-  return await prisma.document.findMany();
+  const documents = await prisma.document.findMany();
+  console.log(documents);
+  console.log("---------");
+  console.log(documents[documents.length - 1]?.value);
+  return documents;
 };
 
 export const getDocumentByIdResolver: FieldResolver<
@@ -18,17 +22,17 @@ export const getDocumentByIdResolver: FieldResolver<
 export const createDocumentResolver: FieldResolver<
   "Mutation",
   "Document" | "createDocument"
-> = async (_, { value }, { prisma }: { prisma: PrismaClient }) => {
-  return await prisma.document.create({ data: { value: value } });
+> = async (_, { input }, { prisma }: { prisma: PrismaClient }) => {
+  return await prisma.document.create({ data: { value: input.value } });
 };
 
 export const updateDocumentByIdResolver: FieldResolver<
   "Mutation",
   "Document" | "updateDocumentById"
-> = async (_, { id, value }, { prisma }: { prisma: PrismaClient }) => {
+> = async (_, { id, input }, { prisma }: { prisma: PrismaClient }) => {
   return await prisma.document.update({
     where: { id: id },
-    data: { value: value },
+    data: { value: input.value },
   });
 };
 
@@ -36,5 +40,6 @@ export const deleteDocumentByIdResolver: FieldResolver<
   "Mutation",
   "deleteDocumentById"
 > = async (_, { id }, { prisma }: { prisma: PrismaClient }) => {
-  return await prisma.document.delete({ where: { id: id } });
+  //return await prisma.document.delete({ where: { id: id } });
+  return await prisma.document.delete({ where: { id } });
 };

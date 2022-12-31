@@ -2,7 +2,6 @@ import { gql, useQuery } from "@apollo/client";
 import type { NextPage } from "next";
 import { CreateButton } from "../components/Button";
 import { MdEditor } from "../components/Editor";
-import { NexusGenObjects } from "../../apollo-server/generated/nexus-typegen";
 import { Descendant } from "slate";
 
 // TODO:
