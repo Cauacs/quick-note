@@ -1,4 +1,11 @@
-import { useCallback, useMemo, useState } from "react";
+import { atRule } from "postcss";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import {
   BaseEditor,
   Editor,
@@ -7,11 +14,12 @@ import {
   Transforms,
   Element as SlateElement,
   createEditor,
+  Descendant,
 } from "slate";
 import {
-  DefaultLeaf,
   Editable,
   ReactEditor,
+  RenderElementProps,
   RenderLeafProps,
   Slate,
   withReact,
@@ -19,17 +27,23 @@ import {
 import { initialValue } from "../utils/initialValue";
 import {
   BlockType,
-  BulletedListElement,
   CustomElement,
   SHORTCUTS,
   HeadersTypes,
   ParagraphElement,
 } from "../utils/slate-types";
+import { ListItem } from "./ListItem";
 
-export const MdEditor = () => {
-  //const [editor] = useState(withShortcuts(withReact(createEditor())));
+export const MdEditor = ({
+  value,
+  setValue,
+  isReadOnly = false,
+}: {
+  value: Descendant[];
+  setValue: Dispatch<SetStateAction<Descendant[]>>;
+  isReadOnly: boolean;
+}) => {
   const editor = useMemo(() => withShortcuts(withReact(createEditor())), []);
-  const [value, setValue] = useState(initialValue);
   const renderElement = useCallback((props: any) => <Element {...props} />, []);
   const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
 
@@ -57,9 +71,10 @@ export const MdEditor = () => {
             return [];
           }}
           renderLeaf={renderLeaf}
+          readOnly={isReadOnly}
         />
       </Slate>
-      <pre>{JSON.stringify(value, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(value, null, 2)}</pre> */}
     </div>
   );
 };
@@ -93,18 +108,18 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
           match: (n) => Editor.isBlock(editor, n),
         });
 
-        if (type === "list-item") {
-          const list: BulletedListElement = {
-            type: BlockType.BulletedList,
-            children: [],
-          };
-          Transforms.wrapNodes(editor, list, {
-            match: (n) =>
-              !Editor.isEditor(n) &&
-              SlateElement.isElement(n) &&
-              n.type === "list-item",
-          });
-        }
+        // if (type === "list-item") {
+        //   const list: BulletedListElement = {
+        //     type: BlockType.BulletedList,
+        //     children: [],
+        //   };
+        //   Transforms.wrapNodes(editor, list, {
+        //     match: (n) =>
+        //       !Editor.isEditor(n) &&
+        //       SlateElement.isElement(n) &&
+        //       n.type === "list-item",
+        //   });
+        // }
 
         return;
       }
@@ -136,15 +151,15 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
           };
           Transforms.setNodes(editor, newProperties);
 
-          if (block.type === "list-item") {
-            Transforms.unwrapNodes(editor, {
-              match: (n) =>
-                !Editor.isEditor(n) &&
-                SlateElement.isElement(n) &&
-                n.type === "bulleted-list",
-              split: true,
-            });
-          }
+          // if (block.type === "list-item") {
+          //   Transforms.unwrapNodes(editor, {
+          //     match: (n) =>
+          //       !Editor.isEditor(n) &&
+          //       SlateElement.isElement(n) &&
+          //       n.type === "bulleted-list",
+          //     split: true,
+          //   });
+          // }
 
           return;
         }
@@ -178,20 +193,12 @@ const withShortcuts = (editor: BaseEditor & ReactEditor) => {
   return editor;
 };
 
-const Element = ({
-  attributes,
-  children,
-  element,
-}: {
-  attributes: any;
-  children: any;
-  element: any;
-}) => {
+const Element = ({ attributes, children, element }: RenderElementProps) => {
   switch (element.type) {
     case "block-quote":
       return <blockquote {...attributes}>{children}</blockquote>;
-    case "bulleted-list":
-      return <ul {...attributes}>{children}</ul>;
+    // case "bulleted-list":
+    //   return <ul {...attributes}>{children}</ul>;
     case "heading-one":
       return <h1 {...attributes}>{children}</h1>;
     case "heading-two":
@@ -205,7 +212,11 @@ const Element = ({
     case "heading-six":
       return <h6 {...attributes}>{children}</h6>;
     case "list-item":
-      return <li {...attributes}>{children}</li>;
+      return (
+        <div {...attributes} className="mt-1 mb-0 ">
+          <ListItem element={element}>{children}</ListItem>
+        </div>
+      );
     default:
       return <p {...attributes}>{children}</p>;
   }

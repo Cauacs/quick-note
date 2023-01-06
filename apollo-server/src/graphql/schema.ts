@@ -15,6 +15,12 @@ const schema = makeSchema({
       "./apollo-server/generated/nexus-typegen.d.ts"
     ),
   },
+  features: {
+    abstractTypeStrategies: {
+      resolveType: false,
+    },
+    abstractTypeRuntimeChecks: true,
+  },
 });
 
 export { schema };

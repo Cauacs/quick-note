@@ -3,9 +3,12 @@ import {
   core,
   extendType,
   inputObjectType,
+  interfaceType,
+  list,
   nonNull,
   objectType,
   stringArg,
+  unionType,
 } from "nexus";
 import {
   createDocumentResolver,
@@ -15,13 +18,12 @@ import {
   updateDocumentByIdResolver,
 } from "../resolvers/documentResolvers";
 
-const jsonArg = (opts: core.NexusArgConfig<"JSON">) =>
-  arg({ ...opts, type: "JSON" });
+//inputs
 
 export const createDocumentInput = inputObjectType({
   name: "createDocumentInput",
   definition(t) {
-    t.nonNull.list.field("value", { type: blockElementInput });
+    t.nonNull.list.field("input", { type: nonNull(blockElementInput) });
   },
 });
 
@@ -42,10 +44,12 @@ export const blockElementInput = inputObjectType({
   definition(t) {
     t.nonNull.string("type");
     t.nonNull.list.field("children", {
-      type: customTextInput,
+      type: nonNull(customTextInput),
     });
   },
 });
+
+//
 
 export const customText = objectType({
   name: "customText",
@@ -105,7 +109,7 @@ export const updateDocumentById = extendType({
       type: "Document",
       args: {
         id: nonNull(stringArg()),
-        input: nonNull(createDocumentInput),
+        value: nonNull(list(blockElementInput)),
       },
       resolve: updateDocumentByIdResolver,
     });
@@ -128,7 +132,7 @@ export const createDocument = extendType({
   definition(t) {
     t.field("createDocument", {
       type: "Document",
-      args: { input: nonNull(createDocumentInput) },
+      args: { value: nonNull(list(blockElementInput)) },
       resolve: createDocumentResolver,
     });
   },

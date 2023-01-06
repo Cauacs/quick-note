@@ -1,5 +1,5 @@
 import { Descendant } from "slate";
-import { BlockType } from "./slate-types";
+import { BlockType, CustomElement } from "./slate-types";
 
 export const initialValue: Descendant[] = [
   {

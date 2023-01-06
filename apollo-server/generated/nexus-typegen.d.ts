@@ -38,11 +38,11 @@ declare global {
 
 export interface NexusGenInputs {
   blockElementInput: { // input type
-    children: Array<NexusGenInputs['customTextInput'] | null>; // [customTextInput]!
+    children: NexusGenInputs['customTextInput'][]; // [customTextInput!]!
     type: string; // String!
   }
   createDocumentInput: { // input type
-    value: Array<NexusGenInputs['blockElementInput'] | null>; // [blockElementInput]!
+    input: NexusGenInputs['blockElementInput'][]; // [blockElementInput!]!
   }
   customTextInput: { // input type
     bold?: boolean | null; // Boolean
@@ -160,14 +160,14 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Mutation: {
     createDocument: { // args
-      input: NexusGenInputs['createDocumentInput']; // createDocumentInput!
+      value: Array<NexusGenInputs['blockElementInput'] | null>; // [blockElementInput]!
     }
     deleteDocumentById: { // args
       id: string; // String!
     }
     updateDocumentById: { // args
       id: string; // String!
-      value: NexusGenScalars['JSON']; // JSON!
+      value: Array<NexusGenInputs['blockElementInput'] | null>; // [blockElementInput]!
     }
   }
   Query: {
@@ -201,9 +201,9 @@ export type NexusGenAbstractsUsingStrategyResolveType = never;
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {
-    isTypeOf: false
-    resolveType: true
+    resolveType: false
     __typename: false
+    isTypeOf: false
   }
 }
 
