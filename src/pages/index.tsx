@@ -39,6 +39,11 @@ const Home: NextPage = () => {
   const onClickCreate = async () => {
     await createDocument({ variables: { value } })
       .then((res) => router.push("/document/" + res.data?.createDocument.id))
+      // .then((res) =>
+      //   router.push({
+      //     pathname: "/document" + res.data?.createDocument.id,
+      //   })
+      // )
       .catch((err) => alert(err));
   };
 

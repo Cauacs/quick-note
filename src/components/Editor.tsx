@@ -24,7 +24,6 @@ import {
   Slate,
   withReact,
 } from "slate-react";
-import { initialValue } from "../utils/initialValue";
 import {
   BlockType,
   CustomElement,
@@ -40,7 +39,7 @@ export const MdEditor = ({
   isReadOnly = false,
 }: {
   value: Descendant[];
-  setValue: Dispatch<SetStateAction<Descendant[]>>;
+  setValue?: Dispatch<SetStateAction<Descendant[]>>;
   isReadOnly: boolean;
 }) => {
   const editor = useMemo(() => withShortcuts(withReact(createEditor())), []);
