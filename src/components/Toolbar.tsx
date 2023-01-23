@@ -1,13 +1,20 @@
 import { Editor } from "slate";
 import { useSlate } from "slate-react";
+import {
+  AiOutlineBold,
+  AiOutlineItalic,
+  AiOutlineUnderline,
+  AiOutlineStrikethrough,
+} from "react-icons/ai";
+import { IconType } from "react-icons";
 
 export const Toolbar = () => {
   return (
     <div onMouseDown={(event) => event.preventDefault()}>
-      <Button format="bold" />
-      <Button format="italic" />
-      <Button format="underline" />
-      <Button format="strikeThrough" />
+      <Button format="bold" Icon={AiOutlineBold} />
+      <Button format="italic" Icon={AiOutlineItalic} />
+      <Button format="underline" Icon={AiOutlineUnderline} />
+      <Button format="strikeThrough" Icon={AiOutlineStrikethrough} />
     </div>
   );
 };
@@ -16,19 +23,24 @@ export const Toolbar = () => {
 
 type ButtonProps = {
   format: string;
+  Icon: IconType;
 };
-const Button = ({ format }: ButtonProps) => {
+const Button = ({ format, Icon }: ButtonProps) => {
   const editor = useSlate();
   const markBool = isMarkActive(editor, format);
   return (
     <button
-      className={`${markBool ? "bg-foreground" : "bg-background"}`}
+      className={`${
+        markBool
+          ? "bg-foreground text-background"
+          : "bg-background text-foreground"
+      }`}
       onClick={(event) => {
         event.preventDefault();
         toggleMark(editor, format, markBool);
       }}
     >
-      {format}
+      <Icon />
     </button>
   );
 };
