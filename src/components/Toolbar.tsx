@@ -3,7 +3,7 @@ import { useSlate } from "slate-react";
 
 export const Toolbar = () => {
   return (
-    <div>
+    <div onMouseDown={(event) => event.preventDefault()}>
       <Button format="bold" />
       <Button format="italic" />
       <Button format="underline" />
