@@ -46,11 +46,10 @@ export const MdEditor = ({
   const editor = useMemo(() => withShortcuts(withReact(createEditor())), []);
   const renderElement = useCallback((props: any) => <Element {...props} />, []);
   const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
-
   return (
     <div>
       <Slate editor={editor} value={value} onChange={setValue}>
-        <Toolbar />
+        {isReadOnly ? null : <Toolbar />}
         <Editable
           renderElement={renderElement}
           decorate={([node, path]) => {
@@ -241,6 +240,15 @@ const Leaf = ({ leaf, children, attributes }: RenderLeafProps) => {
   }
   if (leaf.bold) {
     children = <strong>{children}</strong>;
+  }
+  if (leaf.italic) {
+    children = <em>{children}</em>;
+  }
+  if (leaf.underline) {
+    children = <u>{children}</u>;
+  }
+  if (leaf.strikeThrough) {
+    children = <s>{children}</s>;
   }
 
   return <span {...attributes}>{children}</span>;
