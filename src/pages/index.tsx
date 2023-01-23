@@ -13,10 +13,7 @@ import { Descendant } from "slate";
 import { useRouter } from "next/router";
 
 // TODO:
-//       add the mutation to create a document
-//       add arguments to mdEditor for readOnly and initialValue
-//       add the query to /document/[pid] to query the document containing the id
-//       make everything typesafe.
+//       add the support for bold italic etc...
 //       maybe change the font.
 
 type createDocumentInput = {
@@ -26,7 +23,6 @@ type MutationData = {
   createDocument: NexusGenFieldTypes["Document"];
 };
 
-//here should be the query to save the mutation
 const Home: NextPage = () => {
   const [createDocument, { data, loading, error }] = useMutation<
     MutationData,

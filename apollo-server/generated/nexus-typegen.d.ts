@@ -48,7 +48,7 @@ export interface NexusGenInputs {
     bold?: boolean | null; // Boolean
     italic?: boolean | null; // Boolean
     placeholder?: string | null; // String
-    strikethrough?: boolean | null; // Boolean
+    strikeThrough?: boolean | null; // Boolean
     text: string; // String!
     underline?: boolean | null; // Boolean
   }

@@ -35,7 +35,7 @@ export const customTextInput = inputObjectType({
     t.boolean("bold");
     t.boolean("italic");
     t.boolean("underline");
-    t.boolean("strikethrough");
+    t.boolean("strikeThrough");
   },
 });
 

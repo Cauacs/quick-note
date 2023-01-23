@@ -93,3 +93,15 @@ export const SHORTCUTS: slateShortcuts = {
   "#####": BlockType.H5,
   "######": BlockType.H6,
 };
+
+export type TextBlock =
+  | BlockType.H1
+  | BlockType.H2
+  | BlockType.H3
+  | BlockType.H4
+  | BlockType.H5
+  | BlockType.H6
+  | BlockType.Paragraph
+  | BlockType.ListItem
+  | BlockType.BlockQuote
+  | BlockType.BulletedList;

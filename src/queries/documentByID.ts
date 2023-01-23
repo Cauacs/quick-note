@@ -9,6 +9,11 @@ export const GET_DOCUMENT_BY_ID = gql`
         type
         children {
           text
+          placeholder
+          bold
+          italic
+          underline
+          strikethrough
         }
       }
     }

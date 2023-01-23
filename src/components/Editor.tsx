@@ -32,6 +32,7 @@ import {
   ParagraphElement,
 } from "../utils/slate-types";
 import { ListItem } from "./ListItem";
+import { Toolbar } from "./Toolbar";
 
 export const MdEditor = ({
   value,
@@ -49,6 +50,7 @@ export const MdEditor = ({
   return (
     <div>
       <Slate editor={editor} value={value} onChange={setValue}>
+        <Toolbar />
         <Editable
           renderElement={renderElement}
           decorate={([node, path]) => {
@@ -73,7 +75,7 @@ export const MdEditor = ({
           readOnly={isReadOnly}
         />
       </Slate>
-      {/* <pre>{JSON.stringify(value, null, 2)}</pre> */}
+      <pre>{JSON.stringify(value, null, 2)}</pre>
     </div>
   );
 };
@@ -237,5 +239,9 @@ const Leaf = ({ leaf, children, attributes }: RenderLeafProps) => {
       </>
     );
   }
+  if (leaf.bold) {
+    children = <strong>{children}</strong>;
+  }
+
   return <span {...attributes}>{children}</span>;
 };

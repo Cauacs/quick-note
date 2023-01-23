@@ -56,7 +56,7 @@ input customTextInput {
   bold: Boolean
   italic: Boolean
   placeholder: String
-  strikethrough: Boolean
+  strikeThrough: Boolean
   text: String!
   underline: Boolean
 }
