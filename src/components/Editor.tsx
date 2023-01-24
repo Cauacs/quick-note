@@ -49,7 +49,6 @@ export const MdEditor = ({
   return (
     <div>
       <Slate editor={editor} value={value} onChange={setValue}>
-        {isReadOnly ? null : <Toolbar />}
         <Editable
           renderElement={renderElement}
           decorate={([node, path]) => {
@@ -73,8 +72,9 @@ export const MdEditor = ({
           renderLeaf={renderLeaf}
           readOnly={isReadOnly}
         />
+        {isReadOnly ? null : <Toolbar />}
       </Slate>
-      <pre>{JSON.stringify(value, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(value, null, 2)}</pre> */}
     </div>
   );
 };

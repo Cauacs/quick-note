@@ -5,7 +5,7 @@ export const CreateButton = ({
 }) => {
   return (
     <button
-      className="rounded bg-foreground py-2 px-4 font-bold text-background"
+      className="rounded border py-2 px-4 font-bold"
       onClick={onClickCreate}
     >
       Create

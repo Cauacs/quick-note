@@ -10,7 +10,7 @@ import { IconType } from "react-icons";
 
 export const Toolbar = () => {
   return (
-    <div onMouseDown={(event) => event.preventDefault()}>
+    <div className="text-right" onMouseDown={(event) => event.preventDefault()}>
       <Button format="bold" Icon={AiOutlineBold} />
       <Button format="italic" Icon={AiOutlineItalic} />
       <Button format="underline" Icon={AiOutlineUnderline} />
@@ -30,11 +30,7 @@ const Button = ({ format, Icon }: ButtonProps) => {
   const markBool = isMarkActive(editor, format);
   return (
     <button
-      className={`${
-        markBool
-          ? "bg-foreground text-background"
-          : "bg-background text-foreground"
-      }`}
+      className={`${markBool ? "bg-rose-100" : "bg-teal-100"} ml-1.5 rounded`}
       onClick={(event) => {
         event.preventDefault();
         toggleMark(editor, format, markBool);
