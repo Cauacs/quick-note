@@ -5,15 +5,14 @@ import { MdEditor } from "../components/Editor";
 import { CREATE_DOCUMENT } from "src/mutations/createDocument";
 import { initialValue } from "src/utils/initialValue";
 import { useState } from "react";
-import {
-  NexusGenInputs,
-  NexusGenFieldTypes,
-} from "apollo-server/generated/nexus-typegen";
+import { NexusGenFieldTypes } from "apollo-server/generated/nexus-typegen";
 import { Descendant } from "slate";
 import { useRouter } from "next/router";
+import { MoonLoader } from "react-spinners";
 
-// TODO:
-//       add the support for bold italic etc...
+// TODO: cld9kzk57000alyngk259icxa
+//       change the tailwind css themes to be in the tailwind config like: https://tailwindcss.com/docs/typography-plugin#adding-custom-color-themes
+//       finish styling the toolbar
 //       maybe change the font.
 
 type createDocumentInput = {
@@ -42,9 +41,12 @@ const Home: NextPage = () => {
       // )
       .catch((err) => alert(err));
   };
-
   if (loading) {
-    return <div>loading</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-r from-rose-100 to-teal-100 py-8 lg:py-12">
+        <MoonLoader />
+      </div>
+    );
   }
 
   return (
