@@ -12,6 +12,8 @@
     "@apollo/client": "^3.7.3",
     "@apollo/server": "^4.3.0",
     "@as-integrations/next": "^1.2.0",
+    "@dnd-kit/core": "^6.0.7",
+    "@dnd-kit/sortable": "^7.0.2",
     "@prisma/client": "^4.8.0",
     "@tailwindcss/typography": "^0.5.7",
     "@tanstack/react-query": "^4.10.0",
