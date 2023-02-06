@@ -1,10 +1,11 @@
 // src/pages/_app.tsx
 import "../styles/globals.css";
-import type { AppType } from "next/app";
+import type { AppProps, AppType } from "next/app";
 import { ApolloProvider } from "@apollo/client";
-import { client } from "src/utils/apolloClient";
+import { useApollo } from "src/utils/apolloClient";
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
+  const client = useApollo();
   return (
     <ApolloProvider client={client}>
       <Component {...pageProps} />

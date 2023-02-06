@@ -1,8 +1,9 @@
+import { ApolloClient } from "@apollo/client";
 import { GetServerSideProps } from "next";
 import { Descendant } from "slate";
 import { MdEditor } from "src/components/Editor";
 import { GET_DOCUMENT_BY_ID } from "src/queries/documentByID";
-import { client } from "src/utils/apolloClient";
+import { initializeApollo } from "src/utils/apolloClient";
 
 type queryResponse = {
   Document: {
@@ -33,13 +34,18 @@ function Document({ data }: { data: queryResponse }) {
 export const getServerSideProps: GetServerSideProps<{
   data: queryResponse;
 }> = async (context) => {
+  const client = initializeApollo();
+
   if (context.params && context.params.pid) {
     const { data } = await client.query<queryResponse>({
       query: GET_DOCUMENT_BY_ID,
       variables: { documentId: context.params.pid },
     });
     return {
-      props: { data },
+      props: {
+        data,
+        initialApolloState: client.cache.extract(),
+      },
     };
   } else {
     return { notFound: true };
