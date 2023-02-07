@@ -1,5 +1,7 @@
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient, useQuery } from "@apollo/client";
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
+import { MoonLoader } from "react-spinners";
 import { Descendant } from "slate";
 import { MdEditor } from "src/components/Editor";
 import { GET_DOCUMENT_BY_ID } from "src/queries/documentByID";
@@ -13,7 +15,23 @@ type queryResponse = {
   };
 };
 
-function Document({ data }: { data: queryResponse }) {
+//function Document({ dataa }: { dataa: queryResponse }) {
+function Document() {
+  const router = useRouter();
+
+  const { data, loading, error } = useQuery<queryResponse>(GET_DOCUMENT_BY_ID, {
+    variables: { documentId: router.query.pid },
+  });
+
+  if (loading)
+    return (
+      <div className="flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-r from-rose-100 to-teal-100 py-8 lg:py-12">
+        <MoonLoader />
+      </div>
+    );
+
+  if (error) alert(error);
+
   if (!data?.Document) {
     return <div>No value</div>;
   }
@@ -31,25 +49,26 @@ function Document({ data }: { data: queryResponse }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  data: queryResponse;
-}> = async (context) => {
-  const client = initializeApollo();
+// export const getServerSideProps: GetServerSideProps<{
+//   data: queryResponse;
+// }> = async (context) => {
+//   const client = initializeApollo();
 
-  if (context.params && context.params.pid) {
-    const { data } = await client.query<queryResponse>({
-      query: GET_DOCUMENT_BY_ID,
-      variables: { documentId: context.params.pid },
-    });
-    return {
-      props: {
-        data,
-        initialApolloState: client.cache.extract(),
-      },
-    };
-  } else {
-    return { notFound: true };
-  }
-};
+//   if (context.params && context.params.pid) {
+//     const { data } = await client.query<queryResponse>({
+//       query: GET_DOCUMENT_BY_ID,
+//       variables: { documentId: context.params.pid },
+//     });
+
+//     return {
+//       props: {
+//         data,
+//         initialApolloState: client.cache.extract(),
+//       },
+//     };
+//   } else {
+//     return { notFound: true };
+//   }
+// };
 
 export default Document;
