@@ -47,7 +47,7 @@ export const MdEditor = ({
   const renderElement = useCallback((props: any) => <Element {...props} />, []);
   const renderLeaf = useCallback((props: any) => <Leaf {...props} />, []);
   return (
-    <div>
+    <div className="font-JetMono">
       <Slate editor={editor} value={value} onChange={setValue}>
         <Editable
           renderElement={renderElement}
